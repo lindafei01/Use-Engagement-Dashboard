@@ -103,6 +103,50 @@ Persistence is **SQLite** (single `.db` file). Set **`TWIN_DASHBOARD_DB`** to an
 | **`message_feedback`** | At most **one rating per outbound message** (`score`: +1 / −1), optional. Tied to `messages.id` so **quality** is anchored to a **specific Twin reply**, which matches how UIs usually show thumbs next to a message. |
 | **`document_events`** | A **separate fact** when the user saves or exports a **draft** (email, memo, Slack post, …) in their style. It references `twin_id`, `twin_user_id`, and optionally `conversation_id` if the draft came from that chat. Kept out of `messages` so **“chat volume”** and **“documents produced”** stay distinct product metrics. |
 
+### Table schema (columns)
+
+**`twins`**
+- `id` (INTEGER, PK): Twin deployment identifier.
+- `name` (STRING): human-readable Twin name.
+- `platform` (STRING): deployment surface, e.g. `slack`, `web`.
+- `created_at` (DATETIME): when this Twin was created.
+
+**`twin_users`**
+- `id` (INTEGER, PK): user identifier in this analytics DB.
+- `twin_id` (INTEGER, FK -> `twins.id`): which Twin this person belongs to.
+- `display_name` (STRING): display name for UI/demo.
+- `role` (STRING): `owner` or `collaborator`.
+
+**`conversations`**
+- `id` (INTEGER, PK): conversation/thread identifier.
+- `twin_id` (INTEGER, FK -> `twins.id`): Twin instance for this thread.
+- `twin_user_id` (INTEGER, FK -> `twin_users.id`): user who started the thread.
+- `channel` (STRING): where the thread happened, e.g. `dm`, `#general`.
+- `started_at` (DATETIME): conversation start timestamp.
+- `outcome` (STRING): session-level status, one of `completed`, `abandoned`, `open`.
+
+**`messages`**
+- `id` (INTEGER, PK): message identifier.
+- `conversation_id` (INTEGER, FK -> `conversations.id`): parent conversation.
+- `twin_user_id` (INTEGER, FK nullable -> `twin_users.id`): speaker id for inbound messages; null for outbound Twin replies.
+- `direction` (STRING): `inbound` (user -> Twin) or `outbound` (Twin -> user).
+- `body` (TEXT): message content.
+- `created_at` (DATETIME): message timestamp.
+
+**`message_feedback`**
+- `id` (INTEGER, PK): feedback identifier.
+- `message_id` (INTEGER, FK -> `messages.id`, UNIQUE): outbound message being rated.
+- `score` (INTEGER): `+1` (helpful) or `-1` (not helpful).
+- `created_at` (DATETIME): feedback timestamp.
+
+**`document_events`**
+- `id` (INTEGER, PK): document event identifier.
+- `twin_id` (INTEGER, FK -> `twins.id`): Twin that generated the draft.
+- `twin_user_id` (INTEGER, FK -> `twin_users.id`): user who initiated the draft event.
+- `conversation_id` (INTEGER, FK nullable -> `conversations.id`): optional source thread.
+- `doc_type` (STRING): draft type, e.g. `email`, `memo`, `slack_post`, `other`.
+- `created_at` (DATETIME): event timestamp.
+
 Conceptually:
 
 ```text
@@ -141,7 +185,7 @@ backend/    # uv + FastAPI
 frontend/   # Vite + React + TS + Recharts
 ```
 
-## Notes
+<!-- ## Notes
 
 - Charts: [Recharts](https://recharts.org/). Vite is pinned to **5.x** for broad Node compatibility (`frontend/package.json`).
-- At least one aggregation endpoint with averages: **`/api/metrics/overview`** and others above.
+- At least one aggregation endpoint with averages: **`/api/metrics/overview`** and others above. -->
