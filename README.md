@@ -90,18 +90,18 @@ The dashboard is organized around four pillars:
 
 ## Data model
 
-Persistence is **SQLite** (single `.db` file). Set **`TWIN_DASHBOARD_DB`** to an absolute path if you do not want the default location.
+We use **SQLite** for persistent storage in a single `.db` file. You can set **`TWIN_DASHBOARD_DB`** to an absolute path if you want to override the default location.
 
-### Entities and relationships
+### Descriptions of Tables
 
-| Table | Role |
+| Table | Description |
 |-------|------|
-| **`twins`** | One **deployed Twin** (e.g. a Slack workspace installation or a web app instance). Columns: human-readable `name`, `platform` (`slack`, `web`, …), `created_at`. This is the top-level “product instance” you report on. |
-| **`twin_users`** | A **person** who can talk to that Twin: the **owner** who configured it and **collaborators** invited by the org. `twin_id` ties them to exactly one Twin; `role` is `owner` or `collaborator`. This split lets the dashboard measure **adoption inside a team** (volume by role). |
-| **`conversations`** | A **single chat thread** (e.g. one DM or one channel thread). It belongs to a Twin and is **started by one** `twin_user_id`. `channel` stores where it happened (`dm`, `#general`, …) for **structural** breakdowns. `outcome` (`completed` / `abandoned` / `open`) is a **session-level** signal. It lives on the thread, not on each message, so you can filter “successful” sessions without NLP on bodies. |
-| **`messages`** | **Individual utterances** in a thread. `direction` is `inbound` (human → Twin) or `outbound` (Twin → human). `twin_user_id` is set for inbound rows (who spoke); outbound rows leave it `null` because the “speaker” is the Twin. Timestamps drive **volume**, **DAU**, and **stickiness** queries. |
-| **`message_feedback`** | At most **one rating per outbound message** (`score`: +1 / −1), optional. Tied to `messages.id` so **quality** is anchored to a **specific Twin reply**, which matches how UIs usually show thumbs next to a message. |
-| **`document_events`** | A **separate fact** when the user saves or exports a **draft** (email, memo, Slack post, …) in their style. It references `twin_id`, `twin_user_id`, and optionally `conversation_id` if the draft came from that chat. Kept out of `messages` so **“chat volume”** and **“documents produced”** stay distinct product metrics. |
+| **`twins`** | One deployed Twin (e.g. a Slack workspace installation or a web app instance). Columns: human-readable `name`, `platform` (`slack`, `web`, …), `created_at`. This is the top-level product instance you report on. |
+| **`twin_users`** | A person who can talk to that Twin: the owner who configured it and collaborators invited by the org. `twin_id` ties them to exactly one Twin; `role` is `owner` or `collaborator`. This split lets the dashboard measure adoption inside a team (volume by role). |
+| **`conversations`** | A single chat thread (e.g. one DM or one channel thread). It belongs to a Twin and is started by one `twin_user_id`. `channel` stores where it happened (`dm`, `#general`, …) for structural breakdowns. `outcome` (`completed` / `abandoned` / `open`) is a session-level signal. It lives on the thread, not on each message, so you can filter successful sessions without NLP on bodies. |
+| **`messages`** | Individual utterances in a thread. `direction` is `inbound` (human → Twin) or `outbound` (Twin → human). `twin_user_id` is set for inbound rows (who spoke); outbound rows leave it `null` because the speaker is the Twin. Timestamps drive volume, DAU, and stickiness queries. |
+| **`message_feedback`** | At most one rating per outbound message (`score`: +1 / −1), optional. Tied to `messages.id` so quality is anchored to a specific Twin reply, which matches how UIs usually show thumbs next to a message. |
+| **`document_events`** | A separate fact when the user saves or exports a draft (email, memo, Slack post, …) in their style. It references `twin_id`, `twin_user_id`, and optionally `conversation_id` if the draft came from that chat. Kept out of `messages` so chat volume and documents produced stay distinct product metrics. |
 
 ### Table schema (columns)
 
