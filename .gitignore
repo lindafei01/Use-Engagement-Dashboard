@@ -1,0 +1,11 @@
+# Local Node.js binary bundle (optional; not part of the project)
+.tools/
+
+backend/.venv/
+backend/data/
+frontend/node_modules/
+frontend/dist/
+**/__pycache__/
+*.pyc
+.env
+.DS_Store
