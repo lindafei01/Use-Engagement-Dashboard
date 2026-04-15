@@ -39,7 +39,7 @@ Vite proxies `/api`, `/docs`, and `/openapi.json` to `http://127.0.0.1:8765`. Op
 
 ## Dashboard screenshots
 
-Below are captures of the web UI (English copy, seeded sample data). Files live under [`visualizations/`](visualizations/).
+Below are captures of the web UI. Files live under [`visualizations/`](visualizations/).
 
 ### 1. Volume: KPIs and daily activity
 
