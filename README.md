@@ -178,7 +178,7 @@ twin (deployment)
 
 ### Implementation note
 
-Heavy **counts and averages** are computed in **SQL** where possible. **Stickiness** metrics that need **median gaps between active days** use a small amount of **Python** after a grouped query.
+Heavy **counts and averages** are computed in **SQL** where possible. **Stickiness** metrics that need **median gaps between active days** use a small amount of **Python** computation after a grouped query.
 
 ---
 
