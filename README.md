@@ -70,7 +70,7 @@ The dashboard is organized around four pillars:
 | **Stickiness** | Distinct users, repeat days, median gap between active days, **half-period retention** (first vs second half of window) | Distinguishes one-time trial behavior from habit formation. It helps evaluate onboarding effectiveness, long-term product-market fit, and whether new features improve return frequency rather than only creating short-lived traffic spikes. |
 | **Adoption footprint** | Inbound split by **owner vs collaborator**, and by **channel** (DM, `#channel`, etc.) | Explains how usage spreads inside teams and where collaboration actually happens. It informs rollout strategy (owner-led vs broad org adoption), channel-level enablement efforts, and which internal workflows are most receptive to Twin-driven assistance. |
 
-**NOteS**
+**Notes**
 
 - “Active” = at least one **inbound** message that day (UTC). Passive reads are not tracked.
 - **Session outcome** is the **`outcome` column on `conversations`**: one label per thread for **how the chat is considered to have ended**: `completed`, `abandoned`, or `open`. In production you set it with **explicit instrumentation** (buttons like Resolve/Close, idle rules, integrations), not by parsing message text. This repo does not infer `outcome`; **seed data assigns values at random** for the demo charts.
