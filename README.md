@@ -32,7 +32,7 @@ npm run dev
 
 Vite proxies `/api`, `/docs`, and `/openapi.json` to `http://127.0.0.1:8765`. Open <http://localhost:5173>.
 
-**Remote server:** run backend + `npm run dev` (host `0.0.0.0` on port 5173), then from your laptop:  
+**If you are running the above code on Remote server:** run backend + `npm run dev` (host `0.0.0.0` on port 5173), then from your local laptop:  
 `ssh -L 5173:127.0.0.1:5173 user@server` and browse `http://localhost:5173`.
 
 ---
