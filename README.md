@@ -1,6 +1,6 @@
 # Twin Engagement Dashboard
 
-Full-stack demo: **FastAPI + SQLite** backend with aggregated metrics APIs; **React + TypeScript (Vite)** dashboard UI in **English** for global teams.
+Full-stack demo: **FastAPI + SQLite** backend with aggregated metrics APIs; **React + TypeScript (Vite)** dashboard UI
 
 ## How to run
 
