@@ -53,7 +53,7 @@ Below are captures of the web UI. Files live under [`visualizations/`](visualiza
 
 ![Feedback, documents, outcomes, and retention metrics](visualizations/vis3.png)
 
-### 4. Structure and Twins directory
+### 4. Adoption Footprint and Twins directory
 
 ![Inbound by role and channel, and Twin list](visualizations/vis4.png)
 
@@ -61,16 +61,16 @@ Below are captures of the web UI. Files live under [`visualizations/`](visualiza
 
 ## Metrics
 
-The dashboard is organised around four pillars:
+The dashboard is organized around four pillars:
 
 | Pillar | What we measure | Why it matters |
 |--------|-----------------|----------------|
-| **Volume** | Inbound/outbound messages, new conversations, DAU (mean), depth per conversation | Is the product used enough? Capacity and cost. |
-| **Quality** | Thumbs up/down on Twin replies, share of outbound with feedback, **document drafts** (email, memo, Slack post), **session outcome** (completed / abandoned / open) | Did answers help? Did users produce work in their style? |
-| **Stickiness** | Distinct users, repeat days, median gap between active days, **half-period retention** (first vs second half of window) | One-off trials vs sustained adoption. |
-| **Structure** | Inbound split by **owner vs collaborator**, and by **channel** (DM, `#channel`, etc.) | Is adoption spreading inside the org? |
+| **Volume** | Inbound/outbound messages, new conversations, DAU (mean), depth per conversation | Shows whether usage is growing in absolute terms and whether demand is predictable enough for capacity planning. These signals help estimate model/infra cost, identify peak windows, and decide where response-time or throughput optimizations are most needed. |
+| **Quality** | Thumbs up/down on Twin replies, share of outbound with feedback, **document drafts** (email, memo, Slack post), **session outcome** (completed / abandoned / open) | Indicates whether users are actually getting value, not just sending messages. It supports decisions on prompt/retrieval quality, UX improvements for draft workflows, and prioritization of failure modes that prevent sessions from ending in a “completed” state. |
+| **Stickiness** | Distinct users, repeat days, median gap between active days, **half-period retention** (first vs second half of window) | Distinguishes one-time trial behavior from habit formation. It helps evaluate onboarding effectiveness, long-term product-market fit, and whether new features improve return frequency rather than only creating short-lived traffic spikes. |
+| **Adoption footprint** | Inbound split by **owner vs collaborator**, and by **channel** (DM, `#channel`, etc.) | Explains how usage spreads inside teams and where collaboration actually happens. It informs rollout strategy (owner-led vs broad org adoption), channel-level enablement efforts, and which internal workflows are most receptive to Twin-driven assistance. |
 
-**Assumptions**
+**NOteS**
 
 - “Active” = at least one **inbound** message that day (UTC). Passive reads are not tracked.
 - **Session outcome** is the **`outcome` column on `conversations`**: one label per thread for **how the chat is considered to have ended**: `completed`, `abandoned`, or `open`. In production you set it with **explicit instrumentation** (buttons like Resolve/Close, idle rules, integrations), not by parsing message text. This repo does not infer `outcome`; **seed data assigns values at random** for the demo charts.
