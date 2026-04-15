@@ -92,7 +92,7 @@ The dashboard is organized around four pillars:
 
 We use **SQLite** for persistent storage in a single `.db` file. You can set **`TWIN_DASHBOARD_DB`** to an absolute path if you want to override the default location.
 
-For this demo, I intentionally use a simplified data model so the schema and queries stay easy to review.  
+For this demo, I intentionally use a relatively simplified data model so the schema and queries stay easy to review.  
 For example, `twin_users` is scoped per Twin (instead of modeling a global user identity plus a many-to-many membership table).  
 This simplification is sufficient for Twin-level engagement analytics in the dashboard, but a production system would likely normalize identities further for cross-Twin user analytics and permissions.
 
