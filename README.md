@@ -103,7 +103,7 @@ We use **SQLite** for persistent storage in a single `.db` file. You can set **`
 | **`message_feedback`** | At most one rating per outbound message (`score`: +1 / −1), optional. Tied to `messages.id` so quality is anchored to a specific Twin reply, which matches how UIs usually show thumbs next to a message. |
 | **`document_events`** | A separate fact when the user saves or exports a draft (email, memo, Slack post, …) in their style. It references `twin_id`, `twin_user_id`, and optionally `conversation_id` if the draft came from that chat. Kept out of `messages` so chat volume and documents produced stay distinct product metrics. |
 
-### Table schema (columns)
+### Table Schema
 
 **`twins`**
 - `id` (INTEGER, PK): Twin deployment identifier.
