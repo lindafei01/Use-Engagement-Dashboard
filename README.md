@@ -69,7 +69,7 @@ Below are captures of the web UI (English copy, seeded sample data). Files live 
 
 ---
 
-## Metrics & product framing (English)
+## Metrics
 
 The dashboard is organised around four pillars:
 
